@@ -43,7 +43,6 @@ func (pp PayPalProcessor) GetFee() float64 {
 func ProcessOrder(processor PaymentProcessor, amount float64) error {
 	fee := processor.GetFee()
 	total := amount + (amount * fee)
-
 	fmt.Printf("🧮 Total con comisión: $%.2f (comisión: %.1f%%)\n", total, fee*100)
 	return processor.Process(amount)
 }
@@ -51,11 +50,11 @@ func ProcessOrder(processor PaymentProcessor, amount float64) error {
 func main() {
 	creditCard := CreditCardProcessor{
 		CardNumber: "1234567890123456",
-		FeeRate:    0.035, // 3.5%
+		FeeRate:    0.035,
 	}
 
 	paypal := PayPalProcessor{
-		Email: "user@example.com",
+		Email: "rortizjohnfrank@example.com",
 	}
 
 	ProcessOrder(creditCard, 100)
