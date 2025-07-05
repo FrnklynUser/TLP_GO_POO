@@ -12,6 +12,7 @@ type Notifier interface {
 	Send(message string)
 }
 
+// EmailNotifier compone Logger
 type EmailNotifier struct {
 	Logger
 	EmailAddress string
@@ -22,6 +23,7 @@ func (e EmailNotifier) Send(message string) {
 	fmt.Printf("📧 Enviado a %s: %s\n", e.EmailAddress, message)
 }
 
+// SMSNotifier compone Logger
 type SMSNotifier struct {
 	Logger
 	PhoneNumber string
@@ -38,7 +40,7 @@ func SendNotification(n Notifier, message string) {
 
 func main() {
 	email := EmailNotifier{EmailAddress: "admin@example.com"}
-	sms := SMSNotifier{PhoneNumber: "+51 920123568"}
+	sms := SMSNotifier{PhoneNumber: "+123456789"}
 
 	SendNotification(email, "Bienvenido al sistema")
 	SendNotification(sms, "Tu pedido está listo")
