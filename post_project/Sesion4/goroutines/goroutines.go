@@ -16,7 +16,7 @@ func downloadURL(url string, wg *sync.WaitGroup) {
 func main() {
 	urls := []string{
 		"https://github.com/tiaguinho/gosoap ",
-		"https://example.com/2 ",
+		"https://github.com/FrnklynUser/go_facturacion ",
 		"https://example.com/3 ",
 	}
 
