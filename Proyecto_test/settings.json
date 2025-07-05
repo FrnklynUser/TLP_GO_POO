@@ -1,0 +1,12 @@
+{
+  "go.useLanguageServer": true,
+  "go.formatTool": "goimports",
+  "go.lintTool": "golangci-lint",
+  "go.testFlags": ["-v"],
+  "go.coverOnSave": true,
+  "go.coverOnSingleTest": true,
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true
+  }
+}
