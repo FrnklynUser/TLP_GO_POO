@@ -16,7 +16,7 @@ func downloadURL(url string, wg *sync.WaitGroup) {
 func main() {
 	urls := []string{
 		"https://github.com/tiaguinho/gosoap ",
-		"https://greenter.dev/starter/ ",
+		"https://example.com/2 ",
 		"https://example.com/3 ",
 	}
 
@@ -26,6 +26,7 @@ func main() {
 	start := time.Now()
 
 	for _, url := range urls {
+		// Llamada secuencial sin usar WaitGroup
 		downloadURL(url, &sync.WaitGroup{})
 	}
 
@@ -35,8 +36,9 @@ func main() {
 	fmt.Println("=== DESCARGA CONCURRENTE ===")
 	start = time.Now()
 
+	// Usamos el WaitGroup real para concurrencia
+	wg.Add(len(urls))
 	for _, url := range urls {
-		wg.Add(1)
 		go downloadURL(url, &wg)
 	}
 

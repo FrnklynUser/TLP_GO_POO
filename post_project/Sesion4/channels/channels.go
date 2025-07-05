@@ -9,6 +9,7 @@ import (
 
 type Order struct {
 	ID       int
+	Table    int
 	Priority string
 }
 
@@ -57,18 +58,29 @@ func main() {
 		go restaurant.cookWorker(i, &wg)
 	}
 
-	// Simular la llegada de pedidos
-	go func() {
-		for i := 1; i <= 5; i++ {
-			priority := "normal"
-			if i%2 == 0 {
-				priority = "urgent"
-			}
-			restaurant.urgentOrders <- Order{ID: i, Priority: priority}
-			time.Sleep(100 * time.Millisecond)
-		}
-	}()
+	orders := []Order{
+		{ID: 1, Table: 1, Priority: "normal"},
+		{ID: 2, Table: 2, Priority: "urgent"},
+		{ID: 3, Table: 3, Priority: "normal"},
+		{ID: 4, Table: 4, Priority: "urgent"},
+	}
 
-	// Esperar a que todos los trabajadores terminen
+	for _, order := range orders {
+		if order.Priority == "urgent" {
+			restaurant.urgentOrders <- order
+		} else {
+			restaurant.normalOrders <- order
+		}
+	}
+
+	close(restaurant.urgentOrders)
+	close(restaurant.normalOrders)
+
 	wg.Wait()
+	close(restaurant.kitchenReady)
+
+	fmt.Println("\n🎉 Todos los pedidos procesados:")
+	for ready := range restaurant.kitchenReady {
+		fmt.Printf("🍽 Pedido #%d servido\n", ready.ID)
+	}
 }
